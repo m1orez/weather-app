@@ -49,33 +49,38 @@ export default function WeatherApp() {
   const background = weatherData ? getBackground(weatherData.weather[0].main) : "from-sky-100 to-indigo-200";
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br ${background} flex flex-col items-center justify-center p-4 transition-all duration-500 ease-in-out`}>
-      <h1 className="text-5xl font-extrabold text-gray-800 drop-shadow-md mb-8">Weather Watch</h1>
-      <div className="flex gap-2 mb-6">
+    <div className={`min-h-screen bg-gradient-to-br ${background} flex flex-col items-center justify-center px-4 py-8 transition-all duration-500 ease-in-out`}>      
+      <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-800 drop-shadow-md mb-6 text-center">Weather Watch</h1>
+      <div className="w-full max-w-lg flex flex-col sm:flex-row items-center gap-3 mb-8 px-4">
         <Input
           placeholder="Search city..."
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          className="max-w-sm border border-gray-300 shadow-sm rounded-xl"
+          className="w-full border border-gray-300 shadow-md rounded-xl focus:ring-2 focus:ring-indigo-400"
         />
-        <Button className="rounded-xl px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white" onClick={() => fetchWeather(city)}>Search</Button>
+        <Button className="w-full sm:w-auto rounded-xl px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-md transition-colors duration-300" onClick={() => fetchWeather(city)}>Search</Button>
       </div>
       {loading ? (
-        <p className="text-lg text-gray-700">Loading...</p>
+        <p className="text-lg text-gray-700 animate-pulse">Loading...</p>
       ) : weatherData ? (
-        <Card className="w-full max-w-md rounded-3xl shadow-2xl bg-white/70 backdrop-blur-md">
-          <CardContent className="flex flex-col items-center p-6 gap-5">
-            <div className="flex items-center gap-2">
-              <MapPin className="w-5 h-5 text-gray-600" />
-              <h2 className="text-3xl font-semibold text-gray-800">
-                {weatherData.name}, {weatherData.sys.country}
-              </h2>
+        <Card className="w-full max-w-md rounded-3xl shadow-2xl bg-white/80 backdrop-blur-md border border-gray-200">
+          <CardContent className="flex flex-col items-center p-6 gap-6">
+            <div className="flex flex-col items-center gap-1">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-5 h-5 text-gray-600" />
+                <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800">
+                  {weatherData.name}, {weatherData.sys.country}
+                </h2>
+              </div>
+              <p className="text-gray-500 text-sm">{new Date().toLocaleDateString()}</p>
             </div>
-            {getWeatherIcon(weatherData.weather[0].main)}
-            <p className="text-6xl font-bold text-gray-900">
+            <div className="flex items-center justify-center">
+              {getWeatherIcon(weatherData.weather[0].main)}
+            </div>
+            <p className="text-5xl sm:text-6xl font-bold text-gray-900">
               {Math.round(weatherData.main.temp)}°C
             </p>
-            <p className="text-lg text-gray-700 capitalize tracking-wide">
+            <p className="text-base sm:text-lg text-gray-700 capitalize tracking-wide text-center">
               {weatherData.weather[0].description}
             </p>
           </CardContent>
